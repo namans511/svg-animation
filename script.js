@@ -1,77 +1,37 @@
 var width = window.innerWidth;
 var height = window.innerHeight;
-var posx = 0;
-var posy = height / 2;
+var posx = width / 2;
+var posy = 0;
 var scaleFactor = width / height;
-var scaleabs = scaleFactor;
+var x_velocity = 1;
+var y_velocity = -1;
 var element = document.getElementById("dvd");
 var logo = document.getElementById("logo");
 var logoColor;
+var x = 1;
+var id = setInterval(frame, 1);
 
-var id = setInterval(frame1, 5);
+function checkHitBox() {
+  var f = 0;
+  if (posy < 0 || posy > height - 60) {
+    y_velocity = -y_velocity;
+    f = 1;
+  } else if (posx < 0 || posx > width - 140) {
+    x_velocity = -x_velocity;
+    f = 1;
+  }
+  return f;
+}
 
-function frame1() {
-  if (posy < 0) {
-    clearInterval(id);
-    // console.log("x=" + posx + " y=" + posy);
+function frame() {
+  posy += y_velocity;
+  posx += x_velocity;
+  element.style.left = posx + "px";
+  element.style.top = posy + "px";
+  var hit = checkHitBox();
+  if (hit == 1) {
     pickColor();
     logo.style.fill = logoColor;
-    id = setInterval(frame2, 1);
-    return;
-  } else {
-    posx += scaleFactor;
-    --posy;
-    element.style.left = posx + "px";
-    element.style.top = posy + "px";
-  }
-}
-function frame2() {
-  if (posx > width - 140) {
-    // console.log("we're kinda in");
-    clearInterval(id);
-    pickColor();
-    logo.style.fill = logoColor;
-    id = setInterval(frame3, 1);
-    return;
-  } else {
-    // console.log("were in");
-    posx += scaleFactor;
-    ++posy;
-    element.style.left = posx + "px";
-    element.style.top = posy + "px";
-  }
-}
-function frame3() {
-  if (posy > height - 60) {
-    // console.log("we're kinda in");
-    clearInterval(id);
-    pickColor();
-    logo.style.fill = logoColor;
-    id = setInterval(frame4, 1);
-    return;
-  } else {
-    // console.log("were in");
-    posx -= scaleFactor;
-    ++posy;
-    element.style.left = posx + "px";
-    element.style.top = posy + "px";
-  }
-}
-function frame4() {
-  if (posx < 0) {
-    clearInterval(id);
-    // scaleFactor = Math.random() * (scaleabs + 0.5 - scaleabs);
-    // window.alert("scf=" + scaleFactor);
-    pickColor();
-    logo.style.fill = logoColor;
-    id = setInterval(frame1, 1);
-    return;
-  } else {
-    // console.log("were in");
-    posx -= scaleFactor;
-    --posy;
-    element.style.left = posx + "px";
-    element.style.top = posy + "px";
   }
 }
 
