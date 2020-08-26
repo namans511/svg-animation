@@ -2,9 +2,8 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 var posx = width / 2;
 var posy = 0;
-var scaleFactor = width / height;
-var x_velocity = 1;
-var y_velocity = -1;
+var x_velocity = 1.5;
+var y_velocity = -1.5;
 var element = document.getElementById("dvd");
 var logo = document.getElementById("logo");
 var logoColor;
@@ -45,4 +44,9 @@ function pickColor() {
   b = Math.floor(Math.random() * (254 - 0)) + 0;
 
   logoColor = "rgb(" + r + "," + g + ", " + b + ")";
+}
+
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
 }
